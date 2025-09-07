@@ -1,0 +1,361 @@
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+Warning: Design has unannotated black box outputs. (PWR-428)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : self_attention_top_K_MACRO_COLUMN8_K_MACRO_ROW128_V_MACRO_COLUMN128_V_MACRO_ROW8
+Version: O-2018.06-SP5-5
+Date   : Mon Jun 30 09:29:42 2025
+****************************************
+
+
+Library(s) Used:
+
+    tcbn28hpcplusbwp30p140hvtssg0p81v125c (File: /yuhome/cunsuan/yangjiaqi/Digital_code/m3d_self_attention_500MHz_deisgn_space/lib/tcbn28hpcplusbwp30p140hvtssg0p81v125c.db)
+
+
+Operating Conditions: ssg0p81v125c   Library: tcbn28hpcplusbwp30p140hvtssg0p81v125c
+Wire Load Model Mode: segmented
+
+Design        Wire Load Model            Library
+------------------------------------------------
+self_attention_top_K_MACRO_COLUMN8_K_MACRO_ROW128_V_MACRO_COLUMN128_V_MACRO_ROW8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+GEMV_shared_block1_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_CMP_STAGES_PER_REG2_PARALLEL_ROW8_MACRO_DATA_WIDTH8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+M3D_unshared_block1_MACRO_COLUMN8_MACRO_ROW128_BANK_COLUMN64_BANK_ROW1024_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH3_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW7_log2_MACRO_COLUMN3_PARALLEL_ROW8_MACRO_DATA_WIDTH8_MACROS_ADDR_WIDTH10 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+M3D_unshared_block1_MACRO_COLUMN128_MACRO_ROW8_BANK_COLUMN1024_BANK_ROW64_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH7_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW3_log2_MACRO_COLUMN7_PARALLEL_ROW8_MACRO_DATA_WIDTH8_MACROS_ADDR_WIDTH10 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+GEMV_shared_block2_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_ROUND1024_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+M3D_unshared_block2_MACRO_ROW128_MACRO_COLUMN8_MACROS_ADDR_WIDTH10_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+M3D_unshared_block2_MACRO_ROW8_MACRO_COLUMN128_MACROS_ADDR_WIDTH10_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+softmax_block2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_COL8_BANK_COL1024 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+softmax_block3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+write_controller_INPUT_WIDTH128_INPUT_NUM1_OUTPUT_NUM8_OUTPUT_RAM_WIDTH1024_OUTPUT_RAM_DEPTH3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+weight_write_control_BANK_DATA_WIDTH64_BANK_NUM9_MACROS_ADDR_WIDTH10_MACRO_COLUMN8_MACRO_ROW128 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmIn_control_MACRO_DATA_WIDTH8_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_ROW128_MACRO_COLUMN8_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_15 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+q_cache_control_MACRO_ROW128_Q_BUF_ADDR_WIDTH3_MACRO_DATA_WIDTH8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH72_DEPTH8_log2_DEPTH3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH8_log2_DEPTH3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+DRAM_banks_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_MACRO_COLUMN8_MACRO_ROW128 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+weight_write_control_BANK_DATA_WIDTH64_BANK_NUM9_MACROS_ADDR_WIDTH10_MACRO_COLUMN128_MACRO_ROW8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmIn_control_MACRO_DATA_WIDTH8_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_ROW8_MACRO_COLUMN128_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+q_cache_control_MACRO_ROW8_Q_BUF_ADDR_WIDTH7_MACRO_DATA_WIDTH8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH72_DEPTH128_log2_DEPTH7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH128_log2_DEPTH7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+DRAM_banks_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_MACRO_COLUMN128_MACRO_ROW8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+Accumulation_top_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_18 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+reciprocal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_17 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+Xn_cal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_9 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_10 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_11 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_12 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_13 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_14 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+cmp_tree_INPUT_WIDTH8_INPUT_NUM8_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_8 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_9 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_10 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_11 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_12 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_13 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_14 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_15 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_16 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6 ZeroWireload tcbn28hpcplusbwp30p140hvtssg0p81v125c
+
+
+Global Operating Voltage = 0.81 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+self_attention_top_K_MACRO_COLUMN8_K_MACRO_ROW128_V_MACRO_COLUMN128_V_MACRO_ROW8  230.139  183.425 3.51e+06  417.079 100.0
+  write_controller_inst (write_controller_INPUT_WIDTH128_INPUT_NUM1_OUTPUT_NUM8_OUTPUT_RAM_WIDTH1024_OUTPUT_RAM_DEPTH3)    0.000    2.588 5.27e+04    2.641   0.6
+    FIFO_7__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_0)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_0)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_6__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_1)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_1)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_5__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_2)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_2)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_4__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_3)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_3)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_3__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_4)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_4)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_2__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_5)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_5)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_1__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_6)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_6)    0.000    0.317 6.43e+03    0.324   0.1
+    FIFO_0__u_data_sync_fifo (sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_7)    0.000    0.322 6.56e+03    0.329   0.1
+      fifo_ram (sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_7)    0.000    0.317 6.43e+03    0.324   0.1
+  softmax_block3_inst (softmax_block3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8)    0.000    0.402 7.76e+03    0.409   0.1
+    fp_mul_single_cycle_inst (fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_3)    0.000 2.09e-02 1.53e+03 2.25e-02   0.0
+  softmax_block2_inst (softmax_block2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_COL8_BANK_COL1024)  114.834    0.300 9.77e+03  115.144  27.6
+    reciprocal_inst (reciprocal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16) 3.47e-03    0.223 6.62e+03    0.234   0.1
+      xn_cal_inst (Xn_cal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16) 8.88e-04    0.110 4.44e+03    0.115   0.0
+        fp_mul_single_cycle_1 (fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_0) 1.91e-04 2.11e-02 1.24e+03 2.26e-02   0.0
+        fp_add_single_cycle_0 (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0) 3.23e-05 2.11e-02 1.53e+03 2.27e-02   0.0
+        fp_mul_single_cycle_0 (fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_1) 6.65e-04 2.19e-02 1.20e+03 2.38e-02   0.0
+      add_inst (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1) 1.04e-03 2.41e-02  572.671 2.57e-02   0.0
+      fp_mul_single_cycle_inst_0 (fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_2) 7.04e-04 1.47e-02  271.955 1.57e-02   0.0
+    u_fp_add_single_cycle_0 (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_18) 1.12e-02 4.13e-02 2.57e+03 5.51e-02   0.0
+  V_M3D_unshared_block2 (M3D_unshared_block2_MACRO_ROW8_MACRO_COLUMN128_MACROS_ADDR_WIDTH10_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH7) 6.22e-04    0.460 2.63e+04    0.487   0.1
+    macro_column_accumulation_7__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0) 7.77e-05 5.47e-02 3.26e+03 5.81e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2) 7.77e-05 2.19e-02 2.63e+03 2.46e-02   0.0
+    macro_column_accumulation_6__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1) 7.77e-05 5.47e-02 3.20e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3) 7.77e-05 2.19e-02 2.59e+03 2.46e-02   0.0
+    macro_column_accumulation_5__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2) 7.77e-05 5.47e-02 3.25e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4) 7.77e-05 2.19e-02 2.64e+03 2.46e-02   0.0
+    macro_column_accumulation_4__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3) 7.77e-05 5.47e-02 3.19e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5) 7.77e-05 2.19e-02 2.56e+03 2.46e-02   0.0
+    macro_column_accumulation_3__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4) 7.77e-05 5.47e-02 3.20e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6) 7.77e-05 2.19e-02 2.58e+03 2.46e-02   0.0
+    macro_column_accumulation_2__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5) 7.77e-05 5.47e-02 3.18e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7) 7.77e-05 2.19e-02 2.56e+03 2.46e-02   0.0
+    macro_column_accumulation_1__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6) 7.77e-05 5.47e-02 3.20e+03 5.80e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_8) 7.77e-05 2.19e-02 2.58e+03 2.46e-02   0.0
+    macro_column_accumulation_0__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN128_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN7_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7) 7.77e-05 5.47e-02 3.32e+03 5.81e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_9) 7.77e-05 2.19e-02 2.69e+03 2.47e-02   0.0
+  K_M3D_unshared_block2 (M3D_unshared_block2_MACRO_ROW128_MACRO_COLUMN8_MACROS_ADDR_WIDTH10_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH3) 1.35e-03    0.419 2.50e+04    0.445   0.1
+    macro_column_accumulation_7__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0) 1.63e-04 5.02e-02 3.05e+03 5.34e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_10) 1.47e-04 2.21e-02 2.52e+03 2.47e-02   0.0
+    macro_column_accumulation_6__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1) 1.65e-04 5.02e-02 3.08e+03 5.34e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_11) 1.50e-04 2.21e-02 2.54e+03 2.48e-02   0.0
+    macro_column_accumulation_5__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2) 1.66e-04 5.02e-02 3.12e+03 5.35e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_12) 1.51e-04 2.21e-02 2.58e+03 2.48e-02   0.0
+    macro_column_accumulation_4__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3) 1.65e-04 5.02e-02 3.07e+03 5.34e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_13) 1.49e-04 2.21e-02 2.55e+03 2.48e-02   0.0
+    macro_column_accumulation_3__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4) 1.65e-04 5.02e-02 3.08e+03 5.34e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_14) 1.50e-04 2.21e-02 2.54e+03 2.48e-02   0.0
+    macro_column_accumulation_2__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5) 1.66e-04 5.02e-02 3.05e+03 5.34e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_15) 1.51e-04 2.21e-02 2.52e+03 2.47e-02   0.0
+    macro_column_accumulation_1__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6) 1.65e-04 5.02e-02 3.11e+03 5.35e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_16) 1.49e-04 2.21e-02 2.56e+03 2.48e-02   0.0
+    macro_column_accumulation_0__accumulation_buf_inst (accumulation_buf_MACRO_COLUMN8_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7) 1.67e-04 5.02e-02 3.10e+03 5.35e-02   0.0
+      u_float_adder_single_cycle (fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_17) 1.52e-04 2.21e-02 2.57e+03 2.48e-02   0.0
+  GEMV_shared_block2_inst (GEMV_shared_block2_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_ROUND1024_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9) 8.93e-03    2.169 5.35e+04    2.231   0.5
+    bf16_combination_block_7__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0) 3.22e-04 6.45e-02 1.94e+03 6.67e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_0) 5.51e-06 6.32e-06  221.176 2.33e-04   0.0
+    bf16_combination_block_6__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1) 3.22e-04 6.44e-02 1.97e+03 6.67e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_1) 5.37e-06 6.02e-06  212.981 2.24e-04   0.0
+    bf16_combination_block_5__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2) 3.22e-04 6.53e-02 1.95e+03 6.75e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_2) 4.98e-06 6.16e-06  206.783 2.18e-04   0.0
+    bf16_combination_block_4__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3) 3.18e-04 6.41e-02 1.88e+03 6.63e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_3) 5.40e-06 6.13e-06  204.923 2.16e-04   0.0
+    bf16_combination_block_3__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4) 3.17e-04 6.51e-02 1.93e+03 6.74e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_4) 4.97e-06 6.26e-06  212.749 2.24e-04   0.0
+    bf16_combination_block_2__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5) 3.19e-04 6.41e-02 1.93e+03 6.63e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_5) 5.33e-06 6.29e-06  207.779 2.19e-04   0.0
+    bf16_combination_block_1__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6) 3.20e-04 6.51e-02 1.92e+03 6.73e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_6) 5.83e-06 6.48e-06  214.976 2.27e-04   0.0
+    bf16_combination_block_0__u_bf16_combination (bf16_combination_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7) 3.18e-04 6.44e-02 1.90e+03 6.66e-02   0.0
+      u_leading_one_detect_com (leading_one_detect_com_INPUT_WIDTH21_OUTPUT_WIDTH6_7) 7.27e-06 6.63e-06  213.565 2.27e-04   0.0
+    u_Accumulation_top (Accumulation_top_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024) 6.38e-03    1.652 3.80e+04    1.696   0.4
+      bit_serial_accumulation_7__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_0) 4.41e-04 5.06e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_6__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_1) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_5__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_2) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_4__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_3) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_3__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_4) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_2__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_5) 4.41e-04 5.06e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_1__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_6) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      bit_serial_accumulation_0__u_bit_serial_acc (bit_serial_acc_ADDER_TREE_WIDTH12_BIT_SERIAL_ACC_WIDTH21_COMPUTE_CYCLE9_ROUND1024_7) 4.41e-04 5.05e-02 1.68e+03 5.27e-02   0.0
+      adder_tree_7__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_0) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_6__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_1) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_5__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_2) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_4__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_3) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_3__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_4) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_2__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_5) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_1__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_6) 3.55e-04    0.156 3.07e+03    0.159   0.0
+      adder_tree_0__u_adder_tree_reg (adder_tree_reg_INPUT_WIDTH12_INPUT_NUM8_STAGES_PER_REG4_7) 3.55e-04    0.156 3.07e+03    0.159   0.0
+  V_M3D_unshared_block1 (M3D_unshared_block1_MACRO_COLUMN128_MACRO_ROW8_BANK_COLUMN1024_BANK_ROW64_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH7_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW3_log2_MACRO_COLUMN7_PARALLEL_ROW8_MACRO_DATA_WIDTH8_MACROS_ADDR_WIDTH10)    0.100   94.206 1.76e+06   96.071  23.0
+    u_dram_banks (DRAM_banks_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_MACRO_COLUMN128_MACRO_ROW8)    0.000 1.41e-03   26.129 1.43e-03   0.0
+    u_q_buf_exp (center_buf_DATA_WIDTH8_DEPTH128_log2_DEPTH7) 1.20e-03    1.281 2.42e+04    1.307   0.3
+    u_q_buf_mantissa (center_buf_DATA_WIDTH72_DEPTH128_log2_DEPTH7) 1.20e-02   11.522 2.15e+05   11.749   2.8
+    q_cache_control_inst (q_cache_control_MACRO_ROW8_Q_BUF_ADDR_WIDTH7_MACRO_DATA_WIDTH8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3) 1.06e-04    0.133 1.53e+03    0.134   0.0
+    genblk1_7__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_0) 1.08e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_6__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_1) 1.09e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_5__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_2) 1.09e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_4__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_3) 1.08e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_3__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_4) 1.11e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_2__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_5) 1.10e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_1__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_6) 1.08e-02   10.163 1.90e+05   10.364   2.5
+    genblk1_0__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_7) 1.11e-02   10.163 1.90e+05   10.365   2.5
+    cmIn_control_inst (cmIn_control_MACRO_DATA_WIDTH8_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_ROW8_MACRO_COLUMN128_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH7)    0.000 5.23e-03  319.872 5.55e-03   0.0
+    u_weight_write_control (weight_write_control_BANK_DATA_WIDTH64_BANK_NUM9_MACROS_ADDR_WIDTH10_MACRO_COLUMN128_MACRO_ROW8) 7.56e-05 1.41e-02  291.290 1.45e-02   0.0
+  K_M3D_unshared_block1 (M3D_unshared_block1_MACRO_COLUMN8_MACRO_ROW128_BANK_COLUMN64_BANK_ROW1024_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH3_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW7_log2_MACRO_COLUMN3_PARALLEL_ROW8_MACRO_DATA_WIDTH8_MACROS_ADDR_WIDTH10)    0.309   82.307 1.55e+06   84.164  20.2
+    u_dram_banks (DRAM_banks_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_DATA_WIDTH8_COL_BLOCK_SIZE8_MACRO_COLUMN8_MACRO_ROW128) 3.01e-06 1.42e-03   25.791 1.45e-03   0.0
+    u_q_buf_exp (center_buf_DATA_WIDTH8_DEPTH8_log2_DEPTH3) 5.50e-04 9.02e-02 2.00e+03 9.27e-02   0.0
+    u_q_buf_mantissa (center_buf_DATA_WIDTH72_DEPTH8_log2_DEPTH3) 5.51e-03    0.800 1.70e+04    0.822   0.2
+    q_cache_control_inst (q_cache_control_MACRO_ROW128_Q_BUF_ADDR_WIDTH3_MACRO_DATA_WIDTH8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3) 4.63e-04    0.127 1.38e+03    0.128   0.0
+    genblk1_7__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_8) 3.68e-02   10.162 1.91e+05   10.389   2.5
+    genblk1_6__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_9) 3.59e-02   10.161 1.91e+05   10.388   2.5
+    genblk1_5__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_10) 3.64e-02   10.161 1.91e+05   10.389   2.5
+    genblk1_4__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_11) 3.64e-02   10.162 1.91e+05   10.390   2.5
+    genblk1_3__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_12) 3.62e-02   10.162 1.91e+05   10.389   2.5
+    genblk1_2__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_13) 3.63e-02   10.162 1.91e+05   10.389   2.5
+    genblk1_1__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_14) 3.66e-02   10.162 1.91e+05   10.390   2.5
+    genblk1_0__u_data_wr_exp_max_buf (center_buf_DATA_WIDTH8_DEPTH1024_log2_DEPTH10_15) 4.73e-02   10.163 1.91e+05   10.401   2.5
+    cmIn_control_inst (cmIn_control_MACRO_DATA_WIDTH8_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH10_BANK_DATA_WIDTH64_BANK_NUM9_MACRO_ROW128_MACRO_COLUMN8_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH3) 1.70e-04 5.51e-03  323.264 6.01e-03   0.0
+    u_weight_write_control (weight_write_control_BANK_DATA_WIDTH64_BANK_NUM9_MACROS_ADDR_WIDTH10_MACRO_COLUMN8_MACRO_ROW128) 5.07e-04 1.43e-02  289.291 1.51e-02   0.0
+  GEMV_shared_block1_inst (GEMV_shared_block1_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_CMP_STAGES_PER_REG2_PARALLEL_ROW8_MACRO_DATA_WIDTH8) 4.55e-02    0.282 1.36e+04    0.341   0.1
+    data_wr_exp_pre_align_7__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_0) 2.88e-03 1.72e-02  929.223 2.10e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_0) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0) 2.82e-03 3.90e-03  727.060 7.45e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_0) 2.82e-03 3.90e-03  727.060 7.45e-03   0.0
+    data_wr_exp_pre_align_6__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_1) 2.75e-03 1.71e-02  881.484 2.08e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_1) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1) 2.69e-03 3.87e-03  679.340 7.23e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_1) 2.69e-03 3.87e-03  679.340 7.23e-03   0.0
+    data_wr_exp_pre_align_5__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_2) 2.63e-03 1.70e-02  880.903 2.05e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_2) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2) 2.56e-03 3.73e-03  678.727 6.97e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_2) 2.56e-03 3.73e-03  678.727 6.97e-03   0.0
+    data_wr_exp_pre_align_4__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_3) 2.67e-03 1.70e-02  869.952 2.06e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_3) 1.29e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3) 2.60e-03 3.80e-03  667.762 7.07e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_3) 2.60e-03 3.80e-03  667.762 7.07e-03   0.0
+    data_wr_exp_pre_align_3__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_4) 3.05e-03 1.73e-02  949.146 2.13e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_4) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4) 2.98e-03 4.01e-03  746.969 7.74e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_4) 2.98e-03 4.01e-03  746.969 7.74e-03   0.0
+    data_wr_exp_pre_align_2__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_5) 2.63e-03 1.70e-02  867.808 2.05e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_5) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5) 2.57e-03 3.75e-03  665.624 6.99e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_5) 2.57e-03 3.75e-03  665.624 6.99e-03   0.0
+    data_wr_exp_pre_align_1__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_6) 2.87e-03 1.72e-02  931.622 2.10e-02   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_6) 1.28e-05 1.54e-03   24.345 1.57e-03   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6) 2.81e-03 3.92e-03  729.448 7.45e-03   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_6) 2.81e-03 3.92e-03  729.448 7.45e-03   0.0
+    data_wr_exp_pre_align_0__u_pre_align_wr_data (pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_7) 2.60e-02    0.162 7.32e+03    0.195   0.0
+      u_mantissa_shift_inst (mantissa_shift_MACRO_DATA_WIDTH8_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_7) 1.13e-02    0.134 4.34e+03    0.149   0.0
+      u_cmp_exp_shift (cmp_exp_shift_MACRO_DATA_WIDTH8_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7) 1.47e-02 1.67e-02 2.80e+03 3.41e-02   0.0
+        cmp_tree_inst (cmp_tree_INPUT_WIDTH8_INPUT_NUM8_7) 4.80e-03 6.43e-03  929.374 1.22e-02   0.0
+1

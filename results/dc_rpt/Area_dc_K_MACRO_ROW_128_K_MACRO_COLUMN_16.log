@@ -1,0 +1,227 @@
+ 
+****************************************
+Report : area
+Design : self_attention_top_K_MACRO_COLUMN16_K_MACRO_ROW128_V_MACRO_COLUMN256_V_MACRO_ROW8
+Version: O-2018.06-SP5-5
+Date   : Mon Jun 30 11:59:22 2025
+****************************************
+
+Library(s) Used:
+
+    tcbn28hpcplusbwp30p140hvtssg0p81v125c (File: /yuhome/cunsuan/yangjiaqi/Digital_code/m3d_self_attention_500MHz_deisgn_space/lib/tcbn28hpcplusbwp30p140hvtssg0p81v125c.db)
+
+Number of ports:                        24490
+Number of nets:                        877132
+Number of cells:                       859943
+Number of combinational cells:         560424
+Number of sequential cells:            296087
+Number of macros/black boxes:               0
+Number of buf/inv:                      12022
+Number of references:                      57
+
+Combinational area:             380227.674439
+Buf/Inv area:                     3465.756011
+Noncombinational area:          561898.003590
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                942125.678029
+Total area:                 undefined
+
+Information: This design contains black box (unknown) components. (RPT-8)
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area              Local cell area
+                                  --------------------  -------------------------------- 
+Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-    Black-
+                                  Total        Total    national     national     boxes   Design
+--------------------------------  -----------  -------  -----------  -----------  ------  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+self_attention_top_K_MACRO_COLUMN16_K_MACRO_ROW128_V_MACRO_COLUMN256_V_MACRO_ROW8 942125.6780   100.0    897.3720    379.6380 0.0000 self_attention_top_K_MACRO_COLUMN16_K_MACRO_ROW128_V_MACRO_COLUMN256_V_MACRO_ROW8
+GEMV_shared_block1_inst              876.3300      0.1       3.6540       0.0000  0.0000  GEMV_shared_block1_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_CMP_STAGES_PER_REG2_PARALLEL_ROW8_MACRO_DATA_WIDTH4
+GEMV_shared_block1_inst/data_wr_exp_pre_align_0__u_pre_align_wr_data    426.3840     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_7
+GEMV_shared_block1_inst/data_wr_exp_pre_align_0__u_pre_align_wr_data/u_cmp_exp_shift    120.8340     0.0     73.3320      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7
+GEMV_shared_block1_inst/data_wr_exp_pre_align_0__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     47.5020     0.0     47.5020      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_7
+GEMV_shared_block1_inst/data_wr_exp_pre_align_0__u_pre_align_wr_data/u_mantissa_shift_inst    282.3660     0.0    175.1400    107.2260 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_7
+GEMV_shared_block1_inst/data_wr_exp_pre_align_1__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_6
+GEMV_shared_block1_inst/data_wr_exp_pre_align_1__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6
+GEMV_shared_block1_inst/data_wr_exp_pre_align_1__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_6
+GEMV_shared_block1_inst/data_wr_exp_pre_align_1__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_6
+GEMV_shared_block1_inst/data_wr_exp_pre_align_2__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_5
+GEMV_shared_block1_inst/data_wr_exp_pre_align_2__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5
+GEMV_shared_block1_inst/data_wr_exp_pre_align_2__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_5
+GEMV_shared_block1_inst/data_wr_exp_pre_align_2__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_5
+GEMV_shared_block1_inst/data_wr_exp_pre_align_3__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_4
+GEMV_shared_block1_inst/data_wr_exp_pre_align_3__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4
+GEMV_shared_block1_inst/data_wr_exp_pre_align_3__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_4
+GEMV_shared_block1_inst/data_wr_exp_pre_align_3__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_4
+GEMV_shared_block1_inst/data_wr_exp_pre_align_4__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_3
+GEMV_shared_block1_inst/data_wr_exp_pre_align_4__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3
+GEMV_shared_block1_inst/data_wr_exp_pre_align_4__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_3
+GEMV_shared_block1_inst/data_wr_exp_pre_align_4__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_3
+GEMV_shared_block1_inst/data_wr_exp_pre_align_5__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_2
+GEMV_shared_block1_inst/data_wr_exp_pre_align_5__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2
+GEMV_shared_block1_inst/data_wr_exp_pre_align_5__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_2
+GEMV_shared_block1_inst/data_wr_exp_pre_align_5__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_2
+GEMV_shared_block1_inst/data_wr_exp_pre_align_6__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_1
+GEMV_shared_block1_inst/data_wr_exp_pre_align_6__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1
+GEMV_shared_block1_inst/data_wr_exp_pre_align_6__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_1
+GEMV_shared_block1_inst/data_wr_exp_pre_align_6__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_1
+GEMV_shared_block1_inst/data_wr_exp_pre_align_7__u_pre_align_wr_data     63.7560     0.0      0.0000     23.1840 0.0000 pre_align_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_0
+GEMV_shared_block1_inst/data_wr_exp_pre_align_7__u_pre_align_wr_data/u_cmp_exp_shift     37.1700     0.0      0.0000      0.0000 0.0000 cmp_exp_shift_MACRO_DATA_WIDTH4_CMP_STAGES_PER_REG2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0
+GEMV_shared_block1_inst/data_wr_exp_pre_align_7__u_pre_align_wr_data/u_cmp_exp_shift/cmp_tree_inst     37.1700     0.0     37.1700      0.0000 0.0000 cmp_tree_INPUT_WIDTH8_INPUT_NUM4_0
+GEMV_shared_block1_inst/data_wr_exp_pre_align_7__u_pre_align_wr_data/u_mantissa_shift_inst      3.4020     0.0      0.5040      2.8980 0.0000 mantissa_shift_MACRO_DATA_WIDTH4_SIGN_WIDTH1_MANTISSA_WIDTH7_EXP_WIDTH8_0
+GEMV_shared_block2_inst             6224.1479      0.7       3.2760       0.0000  0.0000  GEMV_shared_block2_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_DATA_WIDTH4_ROUND2048_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9
+GEMV_shared_block2_inst/bf16_combination_block_0__u_bf16_combination    280.4760     0.0    145.5300    112.8960 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7
+GEMV_shared_block2_inst/bf16_combination_block_0__u_bf16_combination/u_leading_one_detect_com     22.0500     0.0     22.0500      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_7
+GEMV_shared_block2_inst/bf16_combination_block_1__u_bf16_combination    273.4200     0.0    143.7660    110.2500 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6
+GEMV_shared_block2_inst/bf16_combination_block_1__u_bf16_combination/u_leading_one_detect_com     19.4040     0.0     19.4040      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_6
+GEMV_shared_block2_inst/bf16_combination_block_2__u_bf16_combination    279.3420     0.0    144.3960    112.8960 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5
+GEMV_shared_block2_inst/bf16_combination_block_2__u_bf16_combination/u_leading_one_detect_com     22.0500     0.0     22.0500      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_5
+GEMV_shared_block2_inst/bf16_combination_block_3__u_bf16_combination    271.7820     0.0    142.8840    110.7540 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4
+GEMV_shared_block2_inst/bf16_combination_block_3__u_bf16_combination/u_leading_one_detect_com     18.1440     0.0     18.1440      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_4
+GEMV_shared_block2_inst/bf16_combination_block_4__u_bf16_combination    272.6640     0.0    141.8760    112.8960 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3
+GEMV_shared_block2_inst/bf16_combination_block_4__u_bf16_combination/u_leading_one_detect_com     17.8920     0.0     17.8920      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_3
+GEMV_shared_block2_inst/bf16_combination_block_5__u_bf16_combination    273.0420     0.0    143.0100    110.3760 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2
+GEMV_shared_block2_inst/bf16_combination_block_5__u_bf16_combination/u_leading_one_detect_com     19.6560     0.0     19.6560      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_2
+GEMV_shared_block2_inst/bf16_combination_block_6__u_bf16_combination    277.8300     0.0    143.5140    112.8960 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1
+GEMV_shared_block2_inst/bf16_combination_block_6__u_bf16_combination/u_leading_one_detect_com     21.4200     0.0     21.4200      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_1
+GEMV_shared_block2_inst/bf16_combination_block_7__u_bf16_combination    274.1760     0.0    143.7660    111.3840 0.0000 bf16_combination_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_BANK_NUM9_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0
+GEMV_shared_block2_inst/bf16_combination_block_7__u_bf16_combination/u_leading_one_detect_com     19.0260     0.0     19.0260      0.0000 0.0000 leading_one_detect_com_INPUT_WIDTH20_OUTPUT_WIDTH6_0
+GEMV_shared_block2_inst/u_Accumulation_top   4018.1399     0.4      3.2760      0.0000 0.0000 Accumulation_top_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_DATA_WIDTH4_COL_BLOCK_SIZE8_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_0__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_7
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_1__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_6
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_2__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_5
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_3__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_4
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_4__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_3
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_5__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_2
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_6__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_1
+GEMV_shared_block2_inst/u_Accumulation_top/adder_tree_7__u_adder_tree_reg    231.3360     0.0     66.1500    165.1860 0.0000 adder_tree_reg_INPUT_WIDTH11_INPUT_NUM4_STAGES_PER_REG4_0
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_0__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_7
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_1__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_6
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_2__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_5
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_3__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_4
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_4__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_3
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_5__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_2
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_6__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_1
+GEMV_shared_block2_inst/u_Accumulation_top/bit_serial_accumulation_7__u_bit_serial_acc    270.5220     0.0    184.3380     86.1840 0.0000 bit_serial_acc_ADDER_TREE_WIDTH11_BIT_SERIAL_ACC_WIDTH20_COMPUTE_CYCLE9_ROUND2048_0
+K_M3D_unshared_block1             413023.0812     43.8       4.6620       0.0000  0.0000  M3D_unshared_block1_MACRO_COLUMN16_MACRO_ROW128_BANK_COLUMN64_BANK_ROW1024_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH4_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW7_log2_MACRO_COLUMN4_PARALLEL_ROW8_MACRO_DATA_WIDTH4_MACROS_ADDR_WIDTH11
+K_M3D_unshared_block1/cmIn_control_inst     42.7140     0.0     33.6420      9.0720 0.0000 cmIn_control_MACRO_DATA_WIDTH4_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH11_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_ROW128_MACRO_COLUMN16_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH4
+K_M3D_unshared_block1/genblk1_0__u_data_wr_exp_max_buf  51315.8934     5.4  20324.6816  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_15
+K_M3D_unshared_block1/genblk1_1__u_data_wr_exp_max_buf  51303.9234     5.4  20312.7116  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_14
+K_M3D_unshared_block1/genblk1_2__u_data_wr_exp_max_buf  51313.4994     5.4  20322.2876  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_13
+K_M3D_unshared_block1/genblk1_3__u_data_wr_exp_max_buf  51289.1814     5.4  20297.9696  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_12
+K_M3D_unshared_block1/genblk1_4__u_data_wr_exp_max_buf  51308.8374     5.4  20317.6256  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_11
+K_M3D_unshared_block1/genblk1_5__u_data_wr_exp_max_buf  51304.4274     5.4  20313.2156  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_10
+K_M3D_unshared_block1/genblk1_6__u_data_wr_exp_max_buf  51310.8534     5.4  20319.6416  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_9
+K_M3D_unshared_block1/genblk1_7__u_data_wr_exp_max_buf  51300.3954     5.4  20309.1836  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_8
+K_M3D_unshared_block1/q_cache_control_inst    136.7100     0.0     11.7180    124.9920 0.0000 q_cache_control_MACRO_ROW128_Q_BUF_ADDR_WIDTH4_MACRO_DATA_WIDTH4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3
+K_M3D_unshared_block1/u_dram_banks      3.7800     0.0       0.8820       2.8980  0.0000  DRAM_banks_MACROS_ADDR_WIDTH11_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_DATA_WIDTH4_COL_BLOCK_SIZE8_MACRO_COLUMN16_MACRO_ROW128
+K_M3D_unshared_block1/u_q_buf_exp    439.6140      0.0     172.2420     267.3720  0.0000  center_buf_DATA_WIDTH8_DEPTH16_log2_DEPTH4
+K_M3D_unshared_block1/u_q_buf_mantissa   1905.8760     0.2    710.6400   1195.2360 0.0000 center_buf_DATA_WIDTH36_DEPTH16_log2_DEPTH4
+K_M3D_unshared_block1/u_weight_write_control     42.7140     0.0     10.8360     31.8780 0.0000 weight_write_control_BANK_DATA_WIDTH32_BANK_NUM9_MACROS_ADDR_WIDTH11_MACRO_COLUMN16_MACRO_ROW128
+K_M3D_unshared_block2               3428.0820      0.4      18.1440      40.5720  0.0000  M3D_unshared_block2_MACRO_ROW128_MACRO_COLUMN16_MACROS_ADDR_WIDTH11_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH4
+K_M3D_unshared_block2/macro_column_accumulation_0__accumulation_buf_inst    416.3040     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7
+K_M3D_unshared_block2/macro_column_accumulation_0__accumulation_buf_inst/u_float_adder_single_cycle    328.7340     0.0    292.4460     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_21
+K_M3D_unshared_block2/macro_column_accumulation_1__accumulation_buf_inst    428.1480     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6
+K_M3D_unshared_block2/macro_column_accumulation_1__accumulation_buf_inst/u_float_adder_single_cycle    340.5780     0.0    304.2900     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_20
+K_M3D_unshared_block2/macro_column_accumulation_2__accumulation_buf_inst    421.0920     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5
+K_M3D_unshared_block2/macro_column_accumulation_2__accumulation_buf_inst/u_float_adder_single_cycle    333.5220     0.0    297.2340     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_19
+K_M3D_unshared_block2/macro_column_accumulation_3__accumulation_buf_inst    424.2420     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4
+K_M3D_unshared_block2/macro_column_accumulation_3__accumulation_buf_inst/u_float_adder_single_cycle    336.6720     0.0    300.3840     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_18
+K_M3D_unshared_block2/macro_column_accumulation_4__accumulation_buf_inst    419.5800     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3
+K_M3D_unshared_block2/macro_column_accumulation_4__accumulation_buf_inst/u_float_adder_single_cycle    332.0100     0.0    295.7220     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_17
+K_M3D_unshared_block2/macro_column_accumulation_5__accumulation_buf_inst    419.9580     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2
+K_M3D_unshared_block2/macro_column_accumulation_5__accumulation_buf_inst/u_float_adder_single_cycle    332.3880     0.0    296.1000     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_16
+K_M3D_unshared_block2/macro_column_accumulation_6__accumulation_buf_inst    421.0920     0.0     37.2960     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1
+K_M3D_unshared_block2/macro_column_accumulation_6__accumulation_buf_inst/u_float_adder_single_cycle    333.2700     0.0    296.9820     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_15
+K_M3D_unshared_block2/macro_column_accumulation_7__accumulation_buf_inst    418.9500     0.0     37.0440     50.5260 0.0000 accumulation_buf_MACRO_COLUMN16_MACRO_ROW128_log2_MACRO_ROW7_log2_MACRO_COLUMN4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0
+K_M3D_unshared_block2/macro_column_accumulation_7__accumulation_buf_inst/u_float_adder_single_cycle    331.3800     0.0    295.0920     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_14
+V_M3D_unshared_block1             445763.9288     47.3       4.9140       0.0000  0.0000  M3D_unshared_block1_MACRO_COLUMN256_MACRO_ROW8_BANK_COLUMN1024_BANK_ROW64_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_Q_BUF_ADDR_WIDTH8_COMPUTE_CYCLE9_BANK_NUM9_log2_MACRO_ROW3_log2_MACRO_COLUMN8_PARALLEL_ROW8_MACRO_DATA_WIDTH4_MACROS_ADDR_WIDTH11
+V_M3D_unshared_block1/cmIn_control_inst     42.7140     0.0     33.6420      9.0720 0.0000 cmIn_control_MACRO_DATA_WIDTH4_COMPUTE_CYCLE9_MACROS_ADDR_WIDTH11_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_ROW8_MACRO_COLUMN256_COL_BLOCK_SIZE8_Q_BUF_ADDR_WIDTH8
+V_M3D_unshared_block1/genblk1_0__u_data_wr_exp_max_buf  51315.3894     5.4  20324.1776  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_7
+V_M3D_unshared_block1/genblk1_1__u_data_wr_exp_max_buf  51307.5774     5.4  20316.3656  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_6
+V_M3D_unshared_block1/genblk1_2__u_data_wr_exp_max_buf  51311.6094     5.4  20320.3976  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_5
+V_M3D_unshared_block1/genblk1_3__u_data_wr_exp_max_buf  51296.2374     5.4  20305.0256  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_4
+V_M3D_unshared_block1/genblk1_4__u_data_wr_exp_max_buf  51301.5294     5.4  20310.3176  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_3
+V_M3D_unshared_block1/genblk1_5__u_data_wr_exp_max_buf  51314.6334     5.4  20323.4216  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_2
+V_M3D_unshared_block1/genblk1_6__u_data_wr_exp_max_buf  51290.4414     5.4  20299.2296  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_1
+V_M3D_unshared_block1/genblk1_7__u_data_wr_exp_max_buf  51305.4354     5.4  20314.2236  30991.2118 0.0000 center_buf_DATA_WIDTH8_DEPTH2048_log2_DEPTH11_0
+V_M3D_unshared_block1/q_cache_control_inst    181.1880     0.0     28.7280    152.4600 0.0000 q_cache_control_MACRO_ROW8_Q_BUF_ADDR_WIDTH8_MACRO_DATA_WIDTH4_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_COL_BLOCK_SIZE8_log2_COL_BLOCK_SIZE3
+V_M3D_unshared_block1/u_dram_banks      3.7800     0.0       0.8820       2.8980  0.0000  DRAM_banks_MACROS_ADDR_WIDTH11_BANK_DATA_WIDTH32_BANK_NUM9_MACRO_DATA_WIDTH4_COL_BLOCK_SIZE8_MACRO_COLUMN256_MACRO_ROW8
+V_M3D_unshared_block1/u_q_buf_exp   6470.3519      0.7    2574.1800    3896.1720  0.0000  center_buf_DATA_WIDTH8_DEPTH256_log2_DEPTH8
+V_M3D_unshared_block1/u_q_buf_mantissa  28575.4137     3.0  11050.5778  17524.8359 0.0000 center_buf_DATA_WIDTH36_DEPTH256_log2_DEPTH8
+V_M3D_unshared_block1/u_weight_write_control     42.7140     0.0     10.8360     31.8780 0.0000 weight_write_control_BANK_DATA_WIDTH32_BANK_NUM9_MACROS_ADDR_WIDTH11_MACRO_COLUMN256_MACRO_ROW8
+V_M3D_unshared_block2               3564.6660      0.4      21.9240      52.1640  0.0000  M3D_unshared_block2_MACRO_ROW8_MACRO_COLUMN256_MACROS_ADDR_WIDTH11_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8_Q_BUF_ADDR_WIDTH8
+V_M3D_unshared_block2/macro_column_accumulation_0__accumulation_buf_inst    432.1800     0.0     47.7540     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7
+V_M3D_unshared_block2/macro_column_accumulation_0__accumulation_buf_inst/u_float_adder_single_cycle    324.8280     0.0    288.5400     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_13
+V_M3D_unshared_block2/macro_column_accumulation_1__accumulation_buf_inst    434.7000     0.0     49.2660     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6
+V_M3D_unshared_block2/macro_column_accumulation_1__accumulation_buf_inst/u_float_adder_single_cycle    325.8360     0.0    289.5480     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_12
+V_M3D_unshared_block2/macro_column_accumulation_2__accumulation_buf_inst    435.3300     0.0     47.7540     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5
+V_M3D_unshared_block2/macro_column_accumulation_2__accumulation_buf_inst/u_float_adder_single_cycle    327.9780     0.0    291.6900     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_11
+V_M3D_unshared_block2/macro_column_accumulation_3__accumulation_buf_inst    435.9600     0.0     47.7540     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4
+V_M3D_unshared_block2/macro_column_accumulation_3__accumulation_buf_inst/u_float_adder_single_cycle    328.6080     0.0    292.3200     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_10
+V_M3D_unshared_block2/macro_column_accumulation_4__accumulation_buf_inst    438.3540     0.0     47.7540     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3
+V_M3D_unshared_block2/macro_column_accumulation_4__accumulation_buf_inst/u_float_adder_single_cycle    331.0020     0.0    294.7140     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_9
+V_M3D_unshared_block2/macro_column_accumulation_5__accumulation_buf_inst    433.3140     0.0     47.5020     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2
+V_M3D_unshared_block2/macro_column_accumulation_5__accumulation_buf_inst/u_float_adder_single_cycle    326.2140     0.0    289.9260     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_8
+V_M3D_unshared_block2/macro_column_accumulation_6__accumulation_buf_inst    438.1020     0.0     47.5020     60.3540 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1
+V_M3D_unshared_block2/macro_column_accumulation_6__accumulation_buf_inst/u_float_adder_single_cycle    330.2460     0.0    293.9580     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_7
+V_M3D_unshared_block2/macro_column_accumulation_7__accumulation_buf_inst    442.6380     0.0     47.5020     59.5980 0.0000 accumulation_buf_MACRO_COLUMN256_MACRO_ROW8_log2_MACRO_ROW3_log2_MACRO_COLUMN8_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0
+V_M3D_unshared_block2/macro_column_accumulation_7__accumulation_buf_inst/u_float_adder_single_cycle    335.5380     0.0    299.2500     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_6
+softmax_block1_inst                58575.7622      6.2     100.0440     428.4000  0.0000  softmax_block1_FP_WIDTH16_MANT_WIDTH7_EXP_WIDTH8_PARALLEL_ROW8_K_MACRO_ROW128_FP_EXP_WIDTH8_V_BANK_COLUMN1024_V_MACRO_COLUMN256_PARALLEL_COL4
+softmax_block1_inst/SUB_0__fp_add_single_cycle_safe_softmax    329.9940     0.0    293.7060     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_26
+softmax_block1_inst/SUB_1__fp_add_single_cycle_safe_softmax    334.4040     0.0    298.1160     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_25
+softmax_block1_inst/SUB_2__fp_add_single_cycle_safe_softmax    347.7600     0.0    311.4720     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_24
+softmax_block1_inst/SUB_3__fp_add_single_cycle_safe_softmax    352.1700     0.0    315.8820     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_23
+softmax_block1_inst/pij_exp_0__exp_inst    932.1480     0.1     94.1220    103.6980 0.0000 exp_FP_WIDTH16_FP_EXP_WIDTH8_FP_MAN_WIDTH7_3
+softmax_block1_inst/pij_exp_0__exp_inst/fp_add_single_cycle_inst    343.0980     0.0    306.8100     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_5
+softmax_block1_inst/pij_exp_0__exp_inst/fp_mul_single_cycle_inst_0    232.7220     0.0    196.4340     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_10
+softmax_block1_inst/pij_exp_0__exp_inst/fp_mul_single_cycle_inst_1    158.5080     0.0    122.2200     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_9
+softmax_block1_inst/pij_exp_1__exp_inst    925.9740     0.1     91.0980    103.6980 0.0000 exp_FP_WIDTH16_FP_EXP_WIDTH8_FP_MAN_WIDTH7_2
+softmax_block1_inst/pij_exp_1__exp_inst/fp_add_single_cycle_inst    339.4440     0.0    303.1560     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_4
+softmax_block1_inst/pij_exp_1__exp_inst/fp_mul_single_cycle_inst_0    233.2260     0.0    196.9380     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_8
+softmax_block1_inst/pij_exp_1__exp_inst/fp_mul_single_cycle_inst_1    158.5080     0.0    122.2200     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_7
+softmax_block1_inst/pij_exp_2__exp_inst    908.9640     0.1     89.7120    103.6980 0.0000 exp_FP_WIDTH16_FP_EXP_WIDTH8_FP_MAN_WIDTH7_1
+softmax_block1_inst/pij_exp_2__exp_inst/fp_add_single_cycle_inst    324.5760     0.0    288.2880     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_3
+softmax_block1_inst/pij_exp_2__exp_inst/fp_mul_single_cycle_inst_0    232.4700     0.0    196.1820     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_6
+softmax_block1_inst/pij_exp_2__exp_inst/fp_mul_single_cycle_inst_1    158.5080     0.0    122.2200     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_5
+softmax_block1_inst/pij_exp_3__exp_inst    917.5320     0.1     90.5940    102.4380 0.0000 exp_FP_WIDTH16_FP_EXP_WIDTH8_FP_MAN_WIDTH7_0
+softmax_block1_inst/pij_exp_3__exp_inst/fp_add_single_cycle_inst    332.3880     0.0    296.1000     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_2
+softmax_block1_inst/pij_exp_3__exp_inst/fp_mul_single_cycle_inst_0    233.6040     0.0    197.3160     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_4
+softmax_block1_inst/pij_exp_3__exp_inst/fp_mul_single_cycle_inst_1    158.5080     0.0    122.2200     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_3
+softmax_block1_inst/sync_fifo_inst  52998.3722     5.6      44.9820      45.2340  0.0000  sync_fifo_ADDR_WIDTH8_DATA_WIDTH64
+softmax_block1_inst/sync_fifo_inst/fifo_ram  52908.1562     5.6  21942.3964  30965.7598 0.0000 sync_fifo_ram_ADDR_WIDTH8_DATA_WIDTH64_FFD_EN0
+softmax_block2_inst                 1423.0440      0.2       7.9380      71.8200  0.0000  softmax_block2_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_COL4_BANK_COL1024
+softmax_block2_inst/reciprocal_inst   1021.6080     0.1     69.3000     128.5200  0.0000  reciprocal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16
+softmax_block2_inst/reciprocal_inst/add_inst     68.7960     0.0     34.7760     34.0200 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_1
+softmax_block2_inst/reciprocal_inst/fp_mul_single_cycle_inst_0     40.3200     0.0     19.9080     20.4120 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_2
+softmax_block2_inst/reciprocal_inst/xn_cal_inst    714.6720     0.1      0.2520     79.3800 0.0000 Xn_cal_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16
+softmax_block2_inst/reciprocal_inst/xn_cal_inst/fp_add_single_cycle_0    205.2540     0.0    168.9660     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_0
+softmax_block2_inst/reciprocal_inst/xn_cal_inst/fp_mul_single_cycle_0    209.0340     0.0    172.1160     36.9180 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_1
+softmax_block2_inst/reciprocal_inst/xn_cal_inst/fp_mul_single_cycle_1    220.7520     0.0    184.4640     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_0
+softmax_block2_inst/u_fp_add_single_cycle_0    321.6780     0.0    285.3900     36.2880 0.0000 fp_add_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_22
+softmax_block3_inst                 1207.9620      0.1     246.4560     726.3900  0.0000  softmax_block3_EXP_WIDTH8_MANTISSA_WIDTH7_SIGN_WIDTH1_FP_WIDTH16_PARALLEL_ROW8
+softmax_block3_inst/fp_mul_single_cycle_inst    235.1160     0.0    198.8280     36.2880 0.0000 fp_mul_single_cycle_EXP_WIDTH8_MANTISSA_WIDTH7_FP_WIDTH16_11
+write_controller_inst               6761.6641      0.7      14.8680      17.3880  0.0000  write_controller_INPUT_WIDTH128_INPUT_NUM1_OUTPUT_NUM8_OUTPUT_RAM_WIDTH1024_OUTPUT_RAM_DEPTH3
+write_controller_inst/FIFO_0__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_7
+write_controller_inst/FIFO_0__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_7
+write_controller_inst/FIFO_1__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_6
+write_controller_inst/FIFO_1__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_6
+write_controller_inst/FIFO_2__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_5
+write_controller_inst/FIFO_2__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_5
+write_controller_inst/FIFO_3__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_4
+write_controller_inst/FIFO_3__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_4
+write_controller_inst/FIFO_4__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_3
+write_controller_inst/FIFO_4__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_3
+write_controller_inst/FIFO_5__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_2
+write_controller_inst/FIFO_5__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_2
+write_controller_inst/FIFO_6__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_1
+write_controller_inst/FIFO_6__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_1
+write_controller_inst/FIFO_7__u_data_sync_fifo    841.1760     0.1      7.5600      9.0720 0.0000 sync_fifo_ADDR_WIDTH1_DATA_WIDTH128_0
+write_controller_inst/FIFO_7__u_data_sync_fifo/fifo_ram    824.5440     0.1    340.7040    483.8400 0.0000 sync_fifo_ram_ADDR_WIDTH1_DATA_WIDTH128_FFD_EN0_0
+--------------------------------  -----------  -------  -----------  -----------  ------  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                   380227.6744  561898.0036  0.0000
+
+1
