@@ -1,0 +1,19 @@
+# simulation
+build/
+csrc/
+*.daidir/
+simv
+simv.daidir/
+ucli.key
+vc_hdrs.h
+*.vcd
+*.saif
+*.vpd
+
+# synthesis
+syn/out/
+syn/sim/
+syn/command.log
+syn/default.svf
+syn/*.svf
+syn/alib-*/

@@ -1,0 +1,2064 @@
+==================================================
+ DC run : TOP=fht16_bf16 PIPE=2 period=4000ps
+          out=./out/fht16_float_fused
+==================================================
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid this.
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+               Version V-2023.12-SP5 for linux64 - Jul 16, 2024 
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+Initializing...
+Current time:       Thu Jul 30 17:42:13 2026
+Hostname:           en4234654rl
+CPU Model:          INTEL(R) XEON(R) GOLD 6526Y
+CPU Details:        Cores = 1 : Sockets = 1 : Cache Size = 38400 KB : Freq = 3.59 GHz
+OS:                 Linux 4.18.0-553.el8_10.x86_64
+RAM:                1007 GB (Free 937 GB)
+Swap:                 3 GB (Free   3 GB)
+Work Filesystem:    /home mounted to /dev/md0
+Tmp Filesystem:     / mounted to /dev/mapper/rhel-root
+Work Disk:          27829 GB (Free 8505 GB)
+Tmp Disk:            69 GB (Free   9 GB)
+
+CPU Load: 336%, Ram Free: 937 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+# ============================================================================
+#  syn_dc.tcl -- Synopsys Design Compiler synthesis + PPA extraction for the
+#                BF16 adder.
+#
+#     dc_shell -f syn_dc.tcl | tee dc.log
+#
+#  Normally driven by ./run_syn.sh.  All configuration lives in setup.tcl;
+#  timing/DRC constraints live in constraints.tcl.
+# ============================================================================
+source setup.tcl
+./out/fht16_float_fused/logs
+file mkdir $OUT_DIR $RPT_DIR $NET_DIR $LOG_DIR "$OUT_DIR/work"
+# ============================================================================
+#  Libraries
+# ============================================================================
+set search_path [concat $search_path $LIB_PATH $RTL_DIR]
+. /usr/local/tools/Synopsys/syn/V-2023.12-SP5/libraries/syn /usr/local/tools/Synopsys/syn/V-2023.12-SP5/dw/syn_ver /usr/local/tools/Synopsys/syn/V-2023.12-SP5/dw/sim_ver /usr/local/tools/PDK/ASAP7/asap7libs_24/db ../rtl
+foreach db $TARGET_DB {
+    if {![file exists [file join $LIB_PATH $db]] && ![file exists $db]} {
+        puts "ERROR: target library not found: [file join $LIB_PATH $db]"
+        puts "       Set LIB_PATH / TARGET_DB in setup.tcl or source a libs/*.sh."
+        exit 1
+    }
+}
+puts ">>> target library: $TARGET_DB"
+>>> target library: asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db asap7sc7p5t_22b_AO_RVT_TT_170906.db asap7sc7p5t_22b_OA_RVT_TT_170906.db asap7sc7p5t_22b_SEQ_RVT_TT_170906.db
+set target_library    $TARGET_DB
+asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db asap7sc7p5t_22b_AO_RVT_TT_170906.db asap7sc7p5t_22b_OA_RVT_TT_170906.db asap7sc7p5t_22b_SEQ_RVT_TT_170906.db
+set link_library      [concat "*" $TARGET_DB $EXTRA_DB dw_foundation.sldb]
+* asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db asap7sc7p5t_22b_AO_RVT_TT_170906.db asap7sc7p5t_22b_OA_RVT_TT_170906.db asap7sc7p5t_22b_SEQ_RVT_TT_170906.db dw_foundation.sldb
+set synthetic_library [list dw_foundation.sldb]
+dw_foundation.sldb
+if {[string length $SYMBOL_LIB] > 0} { set symbol_library $SYMBOL_LIB }
+define_design_lib WORK -path "$OUT_DIR/work"
+1
+catch { set_app_var verilogout_no_tri                 true  }
+0
+catch { set_app_var sh_enable_page_mode               false }
+0
+catch { set_app_var timing_report_unconstrained_paths true  }
+Error: Variable 'timing_report_unconstrained_paths' is not an application variable. Using Tcl global variable. (CMD-104)
+0
+catch { set_app_var bus_naming_style                  "%s\[%d\]" }
+0
+catch { set_app_var alib_library_analysis_path        $OUT_DIR }
+0
+# ============================================================================
+#  Read + elaborate
+# ============================================================================
+puts "\n>>> analyze"
+
+>>> analyze
+foreach f $RTL_FILES {
+    if {![file exists $f]} { puts "ERROR: missing RTL file $f"; exit 1 }
+    analyze -format verilog -lib WORK $f
+}
+Running PRESTO HDLC
+Compiling source file ../rtl/bf16_add.v
+Presto compilation completed successfully.
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_AO_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_OA_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/Synopsys/syn/V-2023.12-SP5/libraries/syn/dw_foundation.sldb'
+Running PRESTO HDLC
+Compiling source file ../rtl/bf16_addsub_fused.v
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file ../rtl/bf16_addsub_2x.v
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file ../rtl/fht/fht16_bf16.v
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file ../rtl/fht/fht16_bfp.v
+Presto compilation completed successfully.
+Running PRESTO HDLC
+Compiling source file ../rtl/fht/bfp_to_bf16.v
+Presto compilation completed successfully.
+puts "\n>>> elaborate $TOP (PIPE=$PARAM_PIPE, FUSED=$PARAM_FUSED)"
+
+>>> elaborate fht16_bf16 (PIPE=2, FUSED=1)
+switch -- $TOP {
+    bf16_adder {
+        elaborate $TOP -library WORK -parameters "PIPE=$PARAM_PIPE"
+    }
+    bf16_addsub_unit {
+        elaborate $TOP -library WORK \
+            -parameters "FUSED=$PARAM_FUSED,PIPE=$PARAM_PIPE"
+    }
+    default {
+        if {$PARAMS ne ""} {
+            elaborate $TOP -library WORK -parameters "$PARAMS"
+        } else {
+            elaborate $TOP -library WORK
+        }
+    }
+}
+Loading db file '/usr/local/tools/Synopsys/syn/V-2023.12-SP5/libraries/syn/gtech.db'
+Loading db file '/usr/local/tools/Synopsys/syn/V-2023.12-SP5/libraries/syn/standard.sldb'
+  Loading link library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906'
+  Loading link library 'asap7sc7p5t_22b_INVBUF_RVT_TT_170906'
+  Loading link library 'asap7sc7p5t_22b_AO_RVT_TT_170906'
+  Loading link library 'asap7sc7p5t_22b_OA_RVT_TT_170906'
+  Loading link library 'asap7sc7p5t_22b_SEQ_RVT_TT_170906'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully. (fht16_bf16_FUSED1)
+Elaborated 1 design.
+Current design is now 'fht16_bf16_FUSED1'.
+Information: Building the design 'bf16_addsub_fused'. (HDL-193)
+
+Statistics for case statements in always block at line 119 in file
+	'../rtl/bf16_addsub_fused.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           120            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (bf16_addsub_fused)
+1
+# elaborate with -parameters renames the design (bf16_adder -> bf16_adder_PIPE2),
+# so keep the real name around instead of assuming $TOP.
+if {[catch {current_design $TOP}]} {
+    puts ">>> elaborated design is [get_object_name [current_design]]"
+}
+Error: Can't find design 'fht16_bf16'. (UID-109)
+Current design is 'fht16_bf16_FUSED1'.
+link
+
+  Linking design 'fht16_bf16_FUSED1'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (2 designs)               /home/yihangzu/M3DKV/bf16/syn/fht16_bf16_FUSED1.db, etc
+  asap7sc7p5t_22b_SIMPLE_RVT_TT_170906 (library) /usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db
+  asap7sc7p5t_22b_INVBUF_RVT_TT_170906 (library) /usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db
+  asap7sc7p5t_22b_AO_RVT_TT_170906 (library) /usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_AO_RVT_TT_170906.db
+  asap7sc7p5t_22b_OA_RVT_TT_170906 (library) /usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_OA_RVT_TT_170906.db
+  asap7sc7p5t_22b_SEQ_RVT_TT_170906 (library) /usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db
+  dw_foundation.sldb (library) /usr/local/tools/Synopsys/syn/V-2023.12-SP5/libraries/syn/dw_foundation.sldb
+
+1
+uniquify -force
+Information: Uniquified 32 instances of design 'bf16_addsub_fused'. (OPT-1056)
+1
+set TOPD [get_object_name [current_design]]
+Current design is 'fht16_bf16_FUSED1'.
+fht16_bf16_FUSED1
+foreach pat $DONT_USE {
+    if {[catch {
+        set c [get_lib_cells $pat -quiet]
+        if {[sizeof_collection $c] > 0} {
+            set_dont_use $c
+            puts ">>> dont_use: $pat  ([sizeof_collection $c] cells)"
+        } else {
+            puts ">>> dont_use: $pat  (no match, skipped)"
+        }
+    } m]} { puts ">>> dont_use $pat failed: $m" }
+}
+>>> dont_use: */SDF*  (8 cells)
+>>> dont_use: */HB?xp67*  (4 cells)
+>>> dont_use: */*x1p*  (2 cells)
+redirect -file $RPT_DIR/check_design.rpt { catch { check_design } }
+# ============================================================================
+#  Constraints
+# ============================================================================
+source constraints.tcl
+
+>>> fht16_bf16 is combinational - virtual clock + max_delay 4000 ps
+Warning: Creating virtual clock named 'clk' with no sources. (UID-348)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[255]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[254]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[253]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[252]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[251]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[250]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[249]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[248]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[247]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[246]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[245]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[244]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[243]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[242]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[241]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[240]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[239]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[238]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[237]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[236]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[235]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[234]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[233]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[232]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[231]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[230]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[229]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[228]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[227]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[226]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[225]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[224]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[223]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[222]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[221]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[220]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[219]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[218]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[217]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[216]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[215]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[214]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[213]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[212]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[211]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[210]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[209]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[208]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[207]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[206]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[205]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[204]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[203]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[202]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[201]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[200]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[199]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[198]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[197]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[196]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[195]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[194]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[193]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[192]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[191]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[190]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[189]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[188]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[187]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[186]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[185]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[184]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[183]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[182]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[181]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[180]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[179]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[178]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[177]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[176]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[175]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[174]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[173]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[172]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[171]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[170]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[169]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[168]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[167]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[166]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[165]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[164]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[163]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[162]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[161]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[160]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[159]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[158]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[157]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[156]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[155]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[154]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[153]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[152]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[151]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[150]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[149]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[148]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[147]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[146]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[145]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[144]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[143]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[142]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[141]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[140]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[139]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[138]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[137]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[136]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[135]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[134]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[133]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[132]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[131]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[130]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[129]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[128]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[127]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[126]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[125]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[124]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[123]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[122]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[121]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[120]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[119]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[118]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[117]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[116]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[115]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[114]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[113]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[112]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[111]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[110]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[109]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[108]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[107]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[106]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[105]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[104]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[103]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[102]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[101]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[100]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[99]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[98]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[97]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[96]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[95]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[94]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[93]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[92]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[91]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[90]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[89]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[88]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[87]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[86]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[85]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[84]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[83]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[82]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[81]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[80]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[79]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[78]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[77]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[76]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[75]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[74]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[73]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[72]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[71]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[70]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[69]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[68]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[67]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[66]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[65]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[64]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[63]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[62]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[61]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[60]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[59]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[58]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[57]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[56]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[55]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[54]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[53]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[52]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[51]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[50]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[49]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[48]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[47]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[46]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[45]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[44]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[43]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[42]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[41]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[40]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[39]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[38]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[37]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[36]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[35]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[34]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[33]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[32]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[31]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[30]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[29]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[28]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[27]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[26]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[25]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[24]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[23]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[22]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[21]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[20]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[19]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[18]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[17]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[16]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[15]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[14]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[13]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[12]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[11]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[10]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[9]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[8]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[7]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[6]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[5]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[4]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[3]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[2]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[1]'. (UID-401)
+Warning: Design rule attributes from the driving cell will be set on the port 'din[0]'. (UID-401)
+>>> output load = 8 x INVx1_ASAP7_75t_R/A
+Current design is 'fht16_bf16_FUSED1'.
+Current design is 'fht16_bf16_FUSED1'.
+redirect -file $RPT_DIR/check_timing.rpt    { catch { check_timing } }
+redirect -file $RPT_DIR/constraints_pre.rpt { catch { report_constraint -all_violators } }
+write -format ddc -hierarchy -output $NET_DIR/${TOP}.elab.ddc
+Writing ddc file './out/fht16_float_fused/netlist/fht16_bf16.elab.ddc'.
+1
+# ============================================================================
+#  Compile
+# ============================================================================
+set compile_opts [list]
+if {$GATE_CLOCK} { lappend compile_opts -gate_clock }
+-gate_clock
+if {$RETIME}     { lappend compile_opts -retime }
+if {$KEEP_HIER}  { lappend compile_opts -no_autoungroup }
+-gate_clock -no_autoungroup
+puts "\n>>> compile  (ultra=$COMPILE_ULTRA  opts: $compile_opts)"
+
+>>> compile  (ultra=1  opts: -gate_clock -no_autoungroup)
+if {$COMPILE_ULTRA} {
+    if {[catch {eval compile_ultra $compile_opts} msg]} {
+        puts ">>> compile_ultra failed ($msg) -- falling back to plain compile"
+        set COMPILE_ULTRA 0
+    }
+}
+Information: Performing leakage power optimization. (PWR-850)
+CPU Load: 5%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Analyzing: "/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db"
+Analyzing: "/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db"
+Analyzing: "/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_AO_RVT_TT_170906.db"
+Analyzing: "/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_OA_RVT_TT_170906.db"
+Analyzing: "/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db"
+Library analysis succeeded.
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | V-2023.12-DWBB_202312.5 |     *     |
+| Licensed DW Building Blocks        | V-2023.12-DWBB_202312.5 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler WLM                                                               |
+| Command Line | compile_ultra -no_autoungroup -gate_clock                                         |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 12448                                  |
+| Number of User Hierarchies                              | 32                                     |
+| Sequential Cell Count                                   | 0                                      |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 2368                                   |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+Information: There are 288 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+  Simplifying Design 'fht16_bf16_FUSED1'
+Information: Performing clock-gating with positive edge logic: 'integrated' and negative edge logic: 'or'. (PWR-1047)
+
+  Loading target library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906'
+  Loading target library 'asap7sc7p5t_22b_AO_RVT_TT_170906'
+  Loading target library 'asap7sc7p5t_22b_SEQ_RVT_TT_170906'
+LNC WARNING: Found output_to_output lib arc on HAxp5_ASAP7_75t_R.
+Loaded alib file './out/fht16_float_fused/alib-52/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db.alib' (placeholder)
+Loaded alib file './out/fht16_float_fused/alib-52/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db.alib' (placeholder)
+Loaded alib file './out/fht16_float_fused/alib-52/asap7sc7p5t_22b_AO_RVT_TT_170906.db.alib' (placeholder)
+Loaded alib file './out/fht16_float_fused/alib-52/asap7sc7p5t_22b_OA_RVT_TT_170906.db.alib' (placeholder)
+Loaded alib file './out/fht16_float_fused/alib-52/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db.alib' (placeholder)
+Warning: Only placeholder alibs were found. Proceeding with library analysis. (OPT-1311)
+CPU Load: 6%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'fht16_bf16_FUSED1'
+  Processing 'bf16_addsub_fused_0'
+ Implement Synthetic for 'bf16_addsub_fused_0'.
+Information: Added key list 'DesignWare' to design 'bf16_addsub_fused_0'. (DDB-72)
+CPU Load: 6%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'TIELOx1_ASAP7_75t_R' in the library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906' is not characterized for internal power. (PWR-536)
+Information: The library cell 'TIEHIx1_ASAP7_75t_R' in the library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Skipping clock gating on design fht16_bf16_FUSED1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_85J1_124_5433_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_84J1_123_8184_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DP_OP_83J1_122_9092_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_dec_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_add_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW01_sub_J1_0_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0_DW_cmp_J1_4_30, since there are no registers. (PWR-806)
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+Warning: Only placeholder alibs were found. Proceeding with library analysis. (OPT-1311)
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:02:02   39136.0      0.00       0.0    1044.1                           2794250.0000
+    0:02:03   37795.8      0.00       0.0     650.9                           2726662.5000
+
+  Beginning Constant Register Removal
+  -----------------------------------
+
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+  Mapping 'bf16_addsub_fused_24_DP_OP_84J1_123_8184_0'
+  Mapping 'bf16_addsub_fused_10_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_18_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_16_DP_OP_85J1_124_5433_1'
+  Mapping 'bf16_addsub_fused_24_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_26_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_20_DP_OP_84J1_123_8184_0'
+  Mapping 'bf16_addsub_fused_2_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_19_DP_OP_84J1_123_8184_0'
+  Mapping 'bf16_addsub_fused_6_DP_OP_83J1_122_9092_1'
+  Mapping 'bf16_addsub_fused_26_DP_OP_85J1_124_5433_1'
+  Mapping 'bf16_addsub_fused_2_DP_OP_85J1_124_5433_1'
+  Mapping 'bf16_addsub_fused_18_DP_OP_85J1_124_5433_1'
+  Mapping 'bf16_addsub_fused_10_DP_OP_85J1_124_5433_1'
+  Mapping 'bf16_addsub_fused_2_DP_OP_83J1_122_9092_2'
+  Mapping 'bf16_addsub_fused_10_DP_OP_83J1_122_9092_2'
+  Mapping 'bf16_addsub_fused_18_DP_OP_83J1_122_9092_2'
+  Mapping 'bf16_addsub_fused_26_DP_OP_83J1_122_9092_2'
+
+  Beginning Isolate Ports
+  -----------------------
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:02:13   31359.4    332.67   68230.4     483.2                           1947247.8750
+    0:02:16   31662.6      0.00       0.0     481.7                           1989818.6250
+    0:02:16   31662.6      0.00       0.0     481.7                           1989818.6250
+    0:02:16   31662.6      0.00       0.0     481.7                           1989818.6250
+    0:02:20   30582.1      0.00       0.0     346.3                           1886175.5000
+    0:02:21   30269.5      0.00       0.0     334.1                           1868516.1250
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:02:29   29350.6      0.00       0.0     212.0                           1783255.5000
+    0:02:31   28456.7      0.00       0.0     159.1                           1745713.6250
+    0:02:33   27900.5      0.00       0.0     149.6                           1740356.1250
+    0:02:34   27727.7      0.00       0.0     137.1                           1737570.0000
+    0:02:34   27727.7      0.00       0.0     137.1                           1737570.0000
+    0:02:34   27727.7      0.00       0.0     137.1                           1737570.0000
+    0:02:34   27727.7      0.00       0.0     137.1                           1737570.0000
+    0:02:34   27727.7      0.00       0.0     137.1                           1737570.0000
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+
+
+  Beginning Design Rule Fixing  (max_transition)  (max_fanout)
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:02:35   27639.5      0.00       0.0     136.9                           1725844.1250
+  Global Optimization (Phase 31)
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+    0:02:36   27676.6      0.00       0.0       0.0                           1728491.8750
+    0:02:36   27676.6      0.00       0.0       0.0                           1728491.8750
+    0:02:36   27676.6      0.00       0.0       0.0                           1728491.8750
+    0:02:36   27676.6      0.00       0.0       0.0                           1728491.8750
+    0:02:36   27676.6      0.00       0.0       0.0                           1728491.8750
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:39   27658.6      0.00       0.0       0.0                           1632839.5000
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:02:40   27658.6      0.00       0.0       0.0                           1632839.5000
+    0:02:42   27141.9      0.00       0.0       0.0                           1332884.0000
+    0:02:42   27141.9      0.00       0.0       0.0                           1332884.0000
+    0:02:42   27141.9      0.00       0.0       0.0                           1332884.0000
+    0:02:43   27141.9      0.00       0.0       0.0                           1332867.0000
+    0:02:43   27104.8      0.00       0.0       0.0                           1330203.6250
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:45   27075.9      0.00       0.0       0.0                           1317309.5000
+    0:02:47   27043.2      0.00       0.0       0.0                           1312408.3750
+CPU Load: 7%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_OA_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_AO_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+  Loading target library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906'
+  Loading target library 'asap7sc7p5t_22b_AO_RVT_TT_170906'
+  Loading target library 'asap7sc7p5t_22b_SEQ_RVT_TT_170906'
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+CPU Load: 7%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+if {!$COMPILE_ULTRA} {
+    set c2 [list -map_effort high -area_effort high]
+    if {$GATE_CLOCK} { lappend c2 -gate_clock }
+    if {$RETIME}     { lappend c2 -retime }
+    eval compile $c2
+}
+if {$INCR_COMPILE} {
+    puts "\n>>> incremental compile"
+    if {$COMPILE_ULTRA} {
+        set ci [list -incremental]
+        if {$GATE_CLOCK} { lappend ci -gate_clock }
+        catch { eval compile_ultra $ci }
+    } else {
+        catch { compile -incremental_mapping -map_effort high }
+    }
+}
+
+>>> incremental compile
+Information: Performing leakage power optimization. (PWR-850)
+CPU Load: 7%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Alib files are up-to-date.
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler                                                                   |
+| Command Line | compile_ultra -incremental -gate_clock                                            |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 25579                                  |
+| Number of User Hierarchies                              | 32                                     |
+| Sequential Cell Count                                   | 0                                      |
+| Macro Count                                             | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 0                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 0                                      |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with UPF Data                                    | false                                  |
+====================================================================================================
+
+Information: There are 256 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+Warning: Only placeholder alibs were found. Proceeding with library analysis. (OPT-1311)
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping  (Incremental)
+  ------------------------
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'TIELOx1_ASAP7_75t_R' in the library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906' is not characterized for internal power. (PWR-536)
+Information: The library cell 'TIEHIx1_ASAP7_75t_R' in the library 'asap7sc7p5t_22b_SIMPLE_RVT_TT_170906' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Skipping clock gating on design fht16_bf16_FUSED1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_31, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design bf16_addsub_fused_0, since there are no registers. (PWR-806)
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:41   27043.2      0.00       0.0       0.0                           1312408.3750
+    0:00:41   27043.2      0.00       0.0       0.0                           1312408.3750
+
+  Beginning Mapping Optimizations  (Ultra High effort)  (Incremental)
+  -------------------------------
+
+  Beginning Incremental Implementation Selection
+  ----------------------------------------------
+    0:00:42   27043.2      0.00       0.0       0.0                           1312408.3750
+    0:00:42   27043.2      0.00       0.0       0.0                           1312408.3750
+    0:00:42   27043.2      0.00       0.0       0.0                           1312408.3750
+    0:00:42   27043.2      0.00       0.0       0.0                           1312408.3750
+  Global Optimization (Phase 34)
+  Global Optimization (Phase 35)
+  Global Optimization (Phase 36)
+  Global Optimization (Phase 37)
+  Global Optimization (Phase 38)
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:42   27036.5      6.78      75.4       0.0                           1311862.7500
+    0:00:42   27036.5      6.78      75.4       0.0                           1311862.7500
+    0:00:44   27038.8      6.47      71.6       0.0                           1313221.6250
+    0:00:44   27038.8      6.47      71.6       0.0                           1313221.6250
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+
+
+  Beginning Design Rule Fixing  (max_transition)
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:44   27045.6      0.00       0.0       0.0                           1314814.0000
+    0:00:44   27048.3      0.00       0.0       0.0                           1314916.2500
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:45   27048.3      0.00       0.0       0.0                           1314814.0000
+    0:00:45   27045.1      0.00       0.0       0.0                           1314623.6250
+    0:00:46   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:46   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:47   27043.9      0.00       0.0       0.0                           1314487.2500
+    0:00:48   27043.9      0.00       0.0       0.0                           1314470.2500
+    0:00:52   27036.5      0.00       0.0       0.0                           1299807.8750
+    0:00:52   27036.5      0.00       0.0       0.0                           1299807.8750
+    0:00:52   27036.5      0.00       0.0       0.0                           1299807.8750
+    0:00:52   27036.5      0.00       0.0       0.0                           1299807.8750
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_INVBUF_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_OA_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SIMPLE_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_AO_RVT_TT_170906.db'
+Loading db file '/usr/local/tools/PDK/ASAP7/asap7libs_24/db/asap7sc7p5t_22b_SEQ_RVT_TT_170906.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+CPU Load: 7%, Ram Free: 936 GB, Swap Free: 3 GB, Work Disk Free: 8505 GB, Tmp Disk Free: 9 GB
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+0
+# ============================================================================
+#  Netlist outputs
+# ============================================================================
+change_names -rules verilog -hierarchy
+1
+write -format verilog -hierarchy -output $NET_DIR/${TOP}.syn.v
+Writing verilog file '/home/yihangzu/M3DKV/bf16/syn/out/fht16_float_fused/netlist/fht16_bf16.syn.v'.
+1
+write -format ddc     -hierarchy -output $NET_DIR/${TOP}.syn.ddc
+Writing ddc file './out/fht16_float_fused/netlist/fht16_bf16.syn.ddc'.
+1
+catch { write_sdf $NET_DIR/${TOP}.syn.sdf }
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/home/yihangzu/M3DKV/bf16/syn/out/fht16_float_fused/netlist/fht16_bf16.syn.sdf'. (WT-3)
+Information: Updating design information... (UID-85)
+0
+catch { write_sdc $NET_DIR/${TOP}.syn.sdc }
+0
+# ============================================================================
+#  Switching activity for power
+# ============================================================================
+set saif_ok 0
+0
+if {[string length $SAIF_FILE] > 0 && [file exists $SAIF_FILE]} {
+    puts "\n>>> read_saif $SAIF_FILE (instance $SAIF_INSTANCE)"
+    catch { reset_switching_activity }
+    if {[catch {read_saif -input $SAIF_FILE -instance_name $SAIF_INSTANCE \
+                          -auto_map_names} msg]} {
+        puts ">>> read_saif failed: $msg  -- falling back to default activity"
+    } else {
+        set saif_ok 1
+        redirect -file $RPT_DIR/saif_annotation.rpt { catch { report_saif -hier -missing } }
+    }
+}
+if {!$saif_ok} {
+    puts "\n>>> no SAIF - using estimated activity (toggle_rate 0.25 on inputs)"
+    catch {
+        set_switching_activity -toggle_rate 0.25 -static_probability 0.5 \
+            -base_clock [get_clocks $CLK_NAME] -type inputs
+    }
+}
+
+>>> no SAIF - using estimated activity (toggle_rate 0.25 on inputs)
+Warning: Given -base_clock argument '_sel134' does not exist. (PWR-410)
+set_switching_activity applied to 256 selected objects
+0
+# ============================================================================
+#  Reports
+# ============================================================================
+puts "\n>>> reports -> $RPT_DIR"
+
+>>> reports -> ./out/fht16_float_fused/reports
+proc rpt {file body} {
+    global RPT_DIR
+    redirect -file $RPT_DIR/$file { if {[catch {uplevel 1 $body} m]} { puts "SKIPPED: $m" } }
+}
+rpt area.rpt         { report_area }
+rpt area_hier.rpt    { report_area -hierarchy -nosplit }
+rpt qor.rpt          { report_qor }
+rpt reference.rpt    { report_reference -hierarchy -nosplit }
+rpt resources.rpt    { report_resources -hierarchy }
+rpt constraints.rpt  { report_constraint -all_violators -nosplit }
+rpt clock_gating.rpt { report_clock_gating -verbose }
+rpt timing_max.rpt   { report_timing -delay_type max -max_paths 20 -nworst 5 \
+                         -significant_digits 4 -transition_time -capacitance -nosplit }
+rpt timing_min.rpt   { report_timing -delay_type min -max_paths 10 -nworst 3 \
+                         -significant_digits 4 -nosplit }
+rpt power.rpt        { report_power -analysis_effort high -nosplit }
+rpt power_hier.rpt   { report_power -analysis_effort high -hierarchy -levels 3 -nosplit }
+rpt power_groups.rpt { report_power -analysis_effort high \
+                         -groups {clock_network register combinational sequential} -nosplit }
+# ============================================================================
+#  PPA summary
+# ============================================================================
+proc _grab {text pattern {dflt "n/a"}} {
+    if {[regexp -line $pattern $text -> v]} { return $v }
+    return $dflt
+}
+proc _to_mW {val unit} {
+    array set s {W 1e3 mW 1.0 uW 1e-3 nW 1e-6 pW 1e-9 uW/MHz 1e-3}
+    if {[info exists s($unit)]} { return [expr {$val * $s($unit)}] }
+    return $val
+}
+set TU_SEC [expr {$TIME_UNIT eq "ps" ? 1e-12 : 1e-9}]
+1e-12
+proc _mhz {period tu} { return [expr {1.0 / ($period * $tu) / 1e6}] }
+proc _ascale {v div} {
+    if {[string is double -strict $v]} { return [format %.3f [expr {$v / $div}]] }
+    return $v
+}
+set ppa(00_top)       $TOP
+fht16_bf16
+set ppa(01_pipe)      $PARAM_PIPE
+2
+set ppa(02_fused)     [expr {$TOP eq "bf16_addsub_unit" ? $PARAM_FUSED : "-"}]
+-
+set ppa(03_period)    $CLK_PERIOD
+4000
+set ppa(04_freq_mhz)  [format %.2f [_mhz $CLK_PERIOD $TU_SEC]]
+250.00
+set ppa(05_saif)      [expr {$saif_ok ? "measured" : "estimated"}]
+estimated
+set ppa(06_time_unit) $TIME_UNIT
+ps
+set ppa(07_area_unit) $AREA_UNIT
+um^2(7nm)
+# ---- area -----------------------------------------------------------------
+redirect -variable arpt { report_area }
+set raw_total [_grab $arpt {Total cell area:\s+([0-9.e+-]+)}]
+27036.452124
+set ppa(08_area_raw)    $raw_total
+27036.452124
+set ppa(10_area_total)  [_ascale $raw_total $AREA_DIVISOR]
+1689.778
+set ppa(11_area_comb)   [_ascale [_grab $arpt {Combinational area:\s+([0-9.e+-]+)}]    $AREA_DIVISOR]
+1689.778
+set ppa(12_area_seq)    [_ascale [_grab $arpt {Noncombinational area:\s+([0-9.e+-]+)}] $AREA_DIVISOR]
+0.000
+set ppa(13_area_bufinv) [_ascale [_grab $arpt {Buf/Inv area:\s+([0-9.e+-]+)}]          $AREA_DIVISOR]
+260.953
+set ppa(14_leaf_cells)  [sizeof_collection [get_cells -hier -filter "is_hierarchical == false"]]
+25570
+set ppa(15_registers)   [sizeof_collection [all_registers -cells]]
+0
+# Area of the combinational adder alone (the interesting number).  A
+# hierarchical cell has no usable "area" attribute in this DC version, so ask
+# report_area inside the sub-design instead.  Falls back to the total when the
+# hierarchy was flattened (KEEP_HIER=0).
+set ppa(09_area_core) $ppa(10_area_total)
+1689.778
+if {[catch {
+    foreach d [get_object_name [get_designs "${CORE_PATTERN}*" -quiet]] {
+        if {$d ne $TOPD} {
+            current_design $d
+            redirect -variable crpt { report_area }
+            set ppa(09_area_core) \
+                [_ascale [_grab $crpt {Total cell area:\s+([0-9.e+-]+)}] $AREA_DIVISOR]
+            break
+        }
+    }
+} m]} { puts ">>> core-area probe failed: $m" }
+current_design $TOPD
+Current design is 'fht16_bf16_FUSED1'.
+{fht16_bf16_FUSED1}
+# ---- timing ---------------------------------------------------------------
+set paths [get_timing_paths -delay_type max -max_paths 1 -nworst 1]
+{path0}
+if {[sizeof_collection $paths] > 0} {
+    set ppa(20_wns) [format %.4f [get_attribute [index_collection $paths 0] slack]]
+} else {
+    set ppa(20_wns) "n/a"
+}
+0.1763
+redirect -variable qrpt { report_qor }
+set ppa(21_tns)          [_grab $qrpt {Total Negative Slack:\s+(-?[0-9.e+-]+)}]
+0.00
+set ppa(22_violating)    [_grab $qrpt {No\. of Violating Paths:\s+([0-9.e+-]+)}]
+0.00
+set ppa(23_hold_wns)     [_grab $qrpt {Worst Hold Violation:\s+(-?[0-9.e+-]+)}]
+0.00
+set ppa(24_logic_levels) [_grab $qrpt {Levels of Logic:\s+([0-9.e+-]+)}]
+206.00
+if {$ppa(20_wns) ne "n/a"} {
+    set achv [expr {$CLK_PERIOD - $ppa(20_wns)}]
+    set ppa(25_achieved)     [format %.4f $achv]
+    set ppa(26_achieved_mhz) [format %.2f [_mhz $achv $TU_SEC]]
+} else {
+    set ppa(25_achieved)     "n/a"
+    set ppa(26_achieved_mhz) "n/a"
+}
+250.01
+# ---- power ----------------------------------------------------------------
+redirect -variable prpt { report_power -analysis_effort high }
+foreach {key pat} {
+    30_p_internal_mW  {Cell Internal Power\s+=\s+([0-9.e+-]+)\s+(\S+)}
+    31_p_switch_mW    {Net Switching Power\s+=\s+([0-9.e+-]+)\s+(\S+)}
+    32_p_dynamic_mW   {Total Dynamic Power\s+=\s+([0-9.e+-]+)\s+(\S+)}
+    33_p_leakage_mW   {Cell Leakage Power\s+=\s+([0-9.e+-]+)\s+(\S+)}
+} {
+    if {[regexp -line $pat $prpt -> v u]} {
+        set ppa($key) [format %.4f [_to_mW $v $u]]
+    } else {
+        set ppa($key) "n/a"
+    }
+}
+if {$ppa(32_p_dynamic_mW) ne "n/a" && $ppa(33_p_leakage_mW) ne "n/a"} {
+    set ppa(34_p_total_mW) [format %.4f \
+        [expr {$ppa(32_p_dynamic_mW) + $ppa(33_p_leakage_mW)}]]
+} else {
+    set ppa(34_p_total_mW) "n/a"
+}
+13.4213
+# ---- throughput / energy --------------------------------------------------
+# Fully pipelined: OPS_PER_CYCLE results every clock.
+set ppa(17_ops_cyc) $OPS_PER_CYCLE
+1
+if {$ppa(34_p_total_mW) ne "n/a"} {
+    set t_cyc [expr {$CLK_PERIOD * $TU_SEC}]
+    set ppa(40_throughput_Mops) [format %.1f [expr {$OPS_PER_CYCLE / $t_cyc / 1e6}]]
+    set ppa(41_energy_op_pJ)    [format %.4f \
+        [expr {$ppa(34_p_total_mW) * 1e-3 * $t_cyc / $OPS_PER_CYCLE * 1e12}]]
+} else {
+    set ppa(40_throughput_Mops) "n/a"
+    set ppa(41_energy_op_pJ)    "n/a"
+}
+53.6852
+# ---- print + save ---------------------------------------------------------
+set f "  %-26s : %s"
+  %-26s : %s
+set out "============================================================\n"
+============================================================
+
+switch -- $TOP {
+    bf16_adder       { set _hdr "(PIPE=$PARAM_PIPE)" }
+    bf16_addsub_unit { set _hdr "([expr {$PARAM_FUSED ? {FUSED} : {2x bf16_add}}],\
+PIPE=$PARAM_PIPE)" }
+    default          { set _hdr "(combinational)" }
+}
+(combinational)
+append out " PPA SUMMARY -- $TOP  $_hdr\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+
+append out "============================================================\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+
+append out [format $f "target period"   "$ppa(03_period) $TIME_UNIT ($ppa(04_freq_mhz) MHz)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+
+append out [format $f "achieved period" "$ppa(25_achieved) $TIME_UNIT ($ppa(26_achieved_mhz) MHz)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+
+append out [format $f "setup WNS / TNS" "$ppa(20_wns) / $ppa(21_tns) $TIME_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+
+append out [format $f "violating paths" "$ppa(22_violating)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+
+append out [format $f "hold WNS"        "$ppa(23_hold_wns) $TIME_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+
+append out [format $f "levels of logic" "$ppa(24_logic_levels)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+
+append out "------------------------------------------------------------\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+
+append out [format $f "total cell area" "$ppa(10_area_total) $AREA_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+
+append out [format $f "  $CORE_PATTERN" "$ppa(09_area_core) $AREA_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+
+append out [format $f "  combinational" "$ppa(11_area_comb) $AREA_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+
+append out [format $f "  sequential"    "$ppa(12_area_seq) $AREA_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+
+append out [format $f "  buf/inv"       "$ppa(13_area_bufinv) $AREA_UNIT"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+
+if {$AREA_DIVISOR != 1.0} {
+append out [format $f "  (raw DC area)" "$ppa(08_area_raw) lib-units / $AREA_DIVISOR"]\n
+}
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+
+append out [format $f "leaf cells"      "$ppa(14_leaf_cells)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+
+append out [format $f "registers"       "$ppa(15_registers)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+
+append out "------------------------------------------------------------\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+
+append out [format $f "activity source" "$ppa(05_saif)"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+
+append out [format $f "internal power"  "$ppa(30_p_internal_mW) mW"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+
+append out [format $f "switching power" "$ppa(31_p_switch_mW) mW"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+
+append out [format $f "dynamic power"   "$ppa(32_p_dynamic_mW) mW"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+
+append out [format $f "leakage power"   "$ppa(33_p_leakage_mW) mW"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+
+append out [format $f "TOTAL power"     "$ppa(34_p_total_mW) mW"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+
+append out "------------------------------------------------------------\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+
+append out [format $f "throughput"      "$ppa(40_throughput_Mops) Madd/s"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+  throughput                 : 250.0 Madd/s
+
+append out [format $f "energy / add"    "$ppa(41_energy_op_pJ) pJ"]\n
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+  throughput                 : 250.0 Madd/s
+  energy / add               : 53.6852 pJ
+
+append out "============================================================\n"
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+  throughput                 : 250.0 Madd/s
+  energy / add               : 53.6852 pJ
+============================================================
+
+puts "\n$out"
+
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+  throughput                 : 250.0 Madd/s
+  energy / add               : 53.6852 pJ
+============================================================
+
+set fh [open $RPT_DIR/ppa_summary.rpt w]; puts $fh $out; close $fh
+set keys [lsort [array names ppa]]
+00_top 01_pipe 02_fused 03_period 04_freq_mhz 05_saif 06_time_unit 07_area_unit 08_area_raw 09_area_core 10_area_total 11_area_comb 12_area_seq 13_area_bufinv 14_leaf_cells 15_registers 17_ops_cyc 20_wns 21_tns 22_violating 23_hold_wns 24_logic_levels 25_achieved 26_achieved_mhz 30_p_internal_mW 31_p_switch_mW 32_p_dynamic_mW 33_p_leakage_mW 34_p_total_mW 40_throughput_Mops 41_energy_op_pJ
+set hdr {}; set val {}
+foreach k $keys {
+    lappend hdr [string range $k 3 end]
+    lappend val $ppa($k)
+}
+set fh [open $RPT_DIR/ppa.csv w]
+file14
+puts $fh [join $hdr ","]
+puts $fh [join $val ","]
+close $fh
+puts ">>> done.  reports: $RPT_DIR   netlist: $NET_DIR"
+>>> done.  reports: ./out/fht16_float_fused/reports   netlist: ./out/fht16_float_fused/netlist
+exit 0
+
+Memory usage for this session 381 Mbytes.
+Memory usage for this session including child processes 381 Mbytes.
+CPU usage for this session 237 seconds ( 0.07 hours ).
+Elapsed time for this session 241 seconds ( 0.07 hours ).
+
+Thank you...
+
+==================================================
+============================================================
+ PPA SUMMARY -- fht16_bf16  (combinational)
+============================================================
+  target period              : 4000 ps (250.00 MHz)
+  achieved period            : 3999.8237 ps (250.01 MHz)
+  setup WNS / TNS            : 0.1763 / 0.00 ps
+  violating paths            : 0.00
+  hold WNS                   : 0.00 ps
+  levels of logic            : 206.00
+------------------------------------------------------------
+  total cell area            : 1689.778 um^2(7nm)
+    fht16_bf16               : 1689.778 um^2(7nm)
+    combinational            : 1689.778 um^2(7nm)
+    sequential               : 0.000 um^2(7nm)
+    buf/inv                  : 260.953 um^2(7nm)
+    (raw DC area)            : 27036.452124 lib-units / 16.0
+  leaf cells                 : 25570
+  registers                  : 0
+------------------------------------------------------------
+  activity source            : estimated
+  internal power             : 2.0222 mW
+  switching power            : 11.3978 mW
+  dynamic power              : 13.4200 mW
+  leakage power              : 0.0013 mW
+  TOTAL power                : 13.4213 mW
+------------------------------------------------------------
+  throughput                 : 250.0 Madd/s
+  energy / add               : 53.6852 pJ
+============================================================
+
+ full reports: ./out/fht16_float_fused/reports
+==================================================
